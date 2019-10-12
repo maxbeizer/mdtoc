@@ -8,6 +8,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/maxbeizer/mdtoc/parser"
 	"github.com/urfave/cli"
 )
 
@@ -24,7 +25,7 @@ func generate(path string) string {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := scanner.Text()
-		if isHeading(line) {
+		if parser.IsHeading(line) {
 			tocText := convert(line)
 			result = append(result, tocText)
 		}
@@ -37,31 +38,21 @@ func generate(path string) string {
 	return strings.Join(result, "")
 }
 
-func isHeading(line string) bool {
-	return strings.HasPrefix(line, "#")
-}
-
 func convert(line string) string {
 	var b bytes.Buffer
-	s := strings.Split(line, " ")[1:]
+	split := strings.Split(line, " ")
+	h := split[0]
+	s := split[1:]
 	t := strings.Join(s, " ")
 
-	b.WriteString("* [")
-	b.WriteString(t)
-	b.WriteString("]")
-	b.WriteString("(#")
-
-	for i, w := range s {
-		b.WriteString(strings.ToLower(w))
-
-		if i < len(s)-1 {
-			b.WriteString("-")
-		}
+	if len(h) == 1 {
+		return ""
 	}
 
-	b.WriteString(")")
+	b = parser.WriteDepth(b, h)
+	b = parser.WriteLinkText(b, t)
+	b = parser.WriteLink(b, s)
 	b.WriteString("\n")
-
 	return b.String()
 }
 
