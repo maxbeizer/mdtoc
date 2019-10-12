@@ -10,7 +10,14 @@ tbd
 
 ## Usage
 
-tbd
+```
+$ mdtoc ./path/to/file.md
+
+* [Installation](#installation)
+  * [Nested a level](#nested-a-level)
+* [Usage](#usage)
+* [License](#license)
+```
 
 ## License
 
