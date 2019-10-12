@@ -10,6 +10,17 @@ func IsHeading(line string) bool {
 }
 
 func WriteDepth(b bytes.Buffer, h string) bytes.Buffer {
+	var depth []string
+	hashes := strings.Split(h, "")
+	if len(hashes) < 2 {
+		return b
+	}
+	hs := hashes[2:]
+
+	for index := 0; index < len(hs); index++ {
+		depth = append(depth, "  ")
+	}
+	b.WriteString(strings.Join(depth, ""))
 	return b
 }
 

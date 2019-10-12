@@ -82,3 +82,26 @@ func TestWriteLink(t *testing.T) {
 		}
 	}
 }
+
+func TestWriteDepth(t *testing.T) {
+	tests := []struct {
+		expected string
+		example  string
+	}{
+		{"", "#"},
+		{"", "##"},
+		{"  ", "###"},
+		{"    ", "####"},
+		{"      ", "#####"},
+	}
+
+	for i, tt := range tests {
+		var b bytes.Buffer
+		b = WriteDepth(b, tt.example)
+		result := b.String()
+		if tt.expected != result {
+			t.Fatalf("tests[%d] %q - output wrong. expected=%q, got=%q",
+				i, tt.example, tt.expected, result)
+		}
+	}
+}
