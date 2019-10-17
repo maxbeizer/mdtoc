@@ -71,6 +71,7 @@ func TestWriteLink(t *testing.T) {
 		{"(#big----space)", "big    Space"},
 		{"(#withslashes)", "With/Slashes"},
 		{"(#emoji)", ":emoji:"},
+		{"(#with-parenthetical)", "with (parenthetical)"},
 	}
 
 	for i, tt := range tests {

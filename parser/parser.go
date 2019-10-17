@@ -33,7 +33,7 @@ func WriteLinkText(b bytes.Buffer, t string) bytes.Buffer {
 }
 
 func WriteLink(b bytes.Buffer, s []string) bytes.Buffer {
-	re := regexp.MustCompile(`[\/:]`) // GitHub Markdown removes `/` and `:`
+	re := regexp.MustCompile(`[\/:\(\)]`) // GitHub Markdown removes `/`, `()`, and `:`
 	b.WriteString("(#")
 
 	for i, w := range s {
